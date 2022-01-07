@@ -14,7 +14,7 @@ public class WebUtil {
         Util.debug("all useragents: " + getPossibleUserAgents());
         for(String userAgent : getPossibleUserAgents()) {
             try {
-                return downloadFileWithUserAgent(fileName, urlPath, parentPath, getPossibleUserAgents().get(0));
+                return downloadFileWithUserAgent(fileName, urlPath, parentPath, userAgent);
             } catch (IOException e) {
                 Util.printError("File fetch with user agent " + userAgent + " failed!");
                 Util.printError("Error: ");
