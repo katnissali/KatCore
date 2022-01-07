@@ -19,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
@@ -78,7 +78,7 @@ public class Util {
         return true;
     }
     public static Object randomFromList(ArrayList<Object> list){
-        return list.get(new Random().nextInt(list.size()-1));
+        return list.get(ThreadLocalRandom.current().nextInt(list.size()-1));
     }
     public static boolean hasBungee(){ return bungeeUtil != null; }
 
