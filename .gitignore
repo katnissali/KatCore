@@ -1,6 +1,5 @@
 # User-specific stuff
 .idea/
-target
 
 *.iml
 *.ipr
@@ -96,8 +95,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-target/
-
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -112,3 +109,4 @@ buildNumber.properties
 
 # Common working directory
 run/
+/target/
