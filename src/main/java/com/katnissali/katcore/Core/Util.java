@@ -46,8 +46,8 @@ public class Util {
         return format(getConfig().getString(path));
     }
     public static Player getRandomPlayer(){
-        for(Player player : Bukkit.getOnlinePlayers()){ return player; }
-        return null;
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        return players.get(ThreadLocalRandom.current().nextInt(players.size()-1));
     }
     public static String getPrefix(){ return getColoredConfigString("messages.prefix"); }
     public static Object[] listToArray(List<Object> items){
