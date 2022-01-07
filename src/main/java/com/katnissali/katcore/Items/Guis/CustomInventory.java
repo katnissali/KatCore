@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-public class CustomInventory implements Inventory, HasSuper {
+public class CustomInventory implements Inventory {
 
     private ItemBuilder background;
     private String title;
@@ -46,8 +46,6 @@ public class CustomInventory implements Inventory, HasSuper {
         setBackground(item);
     }
 
-
-    @Override
     public Inventory getSuper() {
         return s;
     }
