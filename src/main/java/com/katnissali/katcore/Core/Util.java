@@ -19,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
@@ -46,8 +46,8 @@ public class Util {
         return format(getConfig().getString(path));
     }
     public static Player getRandomPlayer(){
-        for(Player player : Bukkit.getOnlinePlayers()){ return player; }
-        return null;
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        return players.get(ThreadLocalRandom.current().nextInt(players.size()-1));
     }
     public static String getPrefix(){ return getColoredConfigString("messages.prefix"); }
     public static Object[] listToArray(List<Object> items){
@@ -78,7 +78,7 @@ public class Util {
         return true;
     }
     public static Object randomFromList(ArrayList<Object> list){
-        return list.get(new Random().nextInt(list.size()-1));
+        return list.get(ThreadLocalRandom.current().nextInt(list.size()-1));
     }
     public static boolean hasBungee(){ return bungeeUtil != null; }
 

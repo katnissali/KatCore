@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ConfigManager {
 
-    private HashMap<String, YamlConfig> configs = new HashMap<>();
+    private final Map<String, YamlConfig> configs = new HashMap<>();
 
     public ConfigManager(String... configs){
         for(String configName : configs){
@@ -38,6 +38,6 @@ public class ConfigManager {
     public YamlConfig getConfig(String name){
         return configs.get(name + (name.endsWith(".yml")?"":".yml"));
     }
-    public HashMap<String, YamlConfig> getConfigs(){ return configs; }
+    public Map<String, YamlConfig> getConfigs(){ return Collections.unmodifiableMap(configs); }
 
 }
