@@ -1,5 +1,6 @@
-package com.katnissali.katcore.Tab;
+package com.katnissali.katcore.Packets.Tab;
 
+import com.katnissali.katcore.Packets.PacketUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_16_R3.*;
@@ -35,20 +36,13 @@ public class TabPlayer extends TabPlayerBase {
     public void setSignature(String signature) { this.signature = signature; }
 
     public EntityPlayer loadEntityPlayer(){
-        EntityPlayer player = new EntityPlayer(getMinecraftServer(), getWorldServer(), getGameProflie(), getPlayerInteractManager());
+        EntityPlayer player = new EntityPlayer(PacketUtil.getServer(), PacketUtil.getWorld(), getGameProflie(), getPlayerInteractManager());
         player.listName = new ChatComponentText(listName);
         return player;
     }
     public void updateInfo(){}
 
-    @Override
-    public MinecraftServer getMinecraftServer() {
-        return ((CraftServer) Bukkit.getServer()).getServer();
-    }
-    @Override
-    public WorldServer getWorldServer() {
-        return ((CraftWorld)Bukkit.getWorlds().get(0)).getHandle(); //getMinecraftServer().getWorlds().get(0);
-    }
+
     @Override
     public GameProfile getGameProflie() {
         GameProfile profile = new GameProfile(UUID.randomUUID(), getName());
@@ -57,6 +51,6 @@ public class TabPlayer extends TabPlayerBase {
     }
     @Override
     public PlayerInteractManager getPlayerInteractManager() {
-        return new PlayerInteractManager(getWorldServer());
+        return new PlayerInteractManager(PacketUtil.getWorld());
     }
 }

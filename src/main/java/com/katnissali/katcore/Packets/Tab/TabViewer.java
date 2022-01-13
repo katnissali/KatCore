@@ -1,4 +1,4 @@
-package com.katnissali.katcore.Tab;
+package com.katnissali.katcore.Packets.Tab;
 
 import com.katnissali.katcore.Misc.CustomPlayer;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
-package com.katnissali.katcore.Tab;
+package com.katnissali.katcore.Packets.Tab;
 
-import com.katnissali.katcore.Core.Util;
+import com.katnissali.katcore.Packets.PacketUtil;
 import net.minecraft.server.v1_16_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 
@@ -29,10 +29,10 @@ public class TabUtil {
     }
 
     public static void addTabPlayer(TabPlayerBase player, TabViewer receiver){
-        Util.sendPacketsToPlayer(receiver, getTabPacket(ADD, player));
+        PacketUtil.sendPacketsToPlayer(receiver, getTabPacket(ADD, player));
     }
     public static void removeTabPlayer(TabPlayerBase player, TabViewer receiver){
-        Util.sendPacketsToPlayer(receiver, getTabPacket(REMOVE, player));
+        PacketUtil.sendPacketsToPlayer(receiver, getTabPacket(REMOVE, player));
     }
 
     public static void addTabPlayer(TabPlayerBase player, TabViewer... receivers){

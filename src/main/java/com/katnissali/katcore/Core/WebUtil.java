@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class WebUtil {
 
     public static File downloadFile(String fileName, String urlPath, String parentPath) {
-        Util.debug("all useragents: " + getPossibleUserAgents());
-        for(String userAgent : getPossibleUserAgents()) {
+        Util.debug("all useragents: " + getUserAgents());
+        for(String userAgent : getUserAgents()) {
             try {
-                return downloadFileWithUserAgent(fileName, urlPath, parentPath, getPossibleUserAgents().get(0));
+                return downloadFileWithUserAgent(fileName, urlPath, parentPath, getUserAgents().get(0));
             } catch (IOException e) {
                 Util.printError("File fetch with user agent " + userAgent + " failed!");
                 Util.printError("Error: ");
@@ -60,7 +60,7 @@ public class WebUtil {
 
         return new File(parentPath, fileName);
     }
-    private static ArrayList<String> getPossibleUserAgents(){
+    private static ArrayList<String> getUserAgents(){
         ArrayList<String> userAgents = new ArrayList<>();
         userAgents.add("JustixDevelopment/APIClient");
         userAgents.add("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");

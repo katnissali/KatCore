@@ -4,6 +4,7 @@ import com.katnissali.katcore.Core.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 
 public abstract class Cmd implements CommandExecutor, Registerable {
@@ -35,7 +36,13 @@ public abstract class Cmd implements CommandExecutor, Registerable {
     public abstract boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args);
     @Override
     public void register() {
-        Util.getMain().getCommand(name).setExecutor(this);
+        PluginCommand cmd = Util.getMain().getCommand(name);
+        if(cmd == null) {
+            Util.printError("Could not get command " + name + "!");
+            return;
+        } else {
+            cmd.setExecutor(this);
+        }
         if(tabCompleter != null) tabCompleter.register();
     }
 
@@ -44,7 +51,7 @@ public abstract class Cmd implements CommandExecutor, Registerable {
     }
     public TabCompleter getTabCompleter(){ return tabCompleter; }
 
-                                //  MISC
+    //  MISC
     protected void sendMessage(CommandSender sender, String msg){
         if(sender instanceof Player){
             ((Player) sender).sendMessage(msg);

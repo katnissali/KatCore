@@ -8,17 +8,10 @@ public class Timer {
     private final int time;
     private int timeLeft;
     private boolean paused = false;
-    private boolean automaticallyRepeat = false;
 
     public Timer(int seconds){
         this.time = seconds;
         timeLeft = seconds;
-        init();
-    }
-    public Timer(int seconds, boolean automaticallyRepeat){
-        this.time = seconds;
-        timeLeft = seconds;
-        this.automaticallyRepeat = automaticallyRepeat;
         init();
     }
 
@@ -38,6 +31,7 @@ public class Timer {
     public void reset(){
         timeLeft = time;
     }
+    public void onFinish(){}
 
     //  GETTERS
     public int getTime(){ return time; }

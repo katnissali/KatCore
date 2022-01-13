@@ -14,25 +14,25 @@ public class Hologram extends HoloBase {
     private List<HologramStand> stands = new ArrayList<HologramStand>();
 
     public Hologram(String[] lore, Location location, boolean hidden, boolean letPlayersClick){
-        super(location, hidden, letPlayersClick);
-        instantiate(Arrays.asList(lore));
+        super(location, hidden);
+        instantiate(Arrays.asList(lore), letPlayersClick);
     }
     public Hologram(List<String> lore, Location location, boolean hidden, boolean letPlayersClick){
-        super(location, hidden, letPlayersClick);
-        instantiate(lore);
+        super(location, hidden);
+        instantiate(lore, letPlayersClick);
     }
 
     public double getLineSpacing(){ return lineSpacing; }
     public void setLineSpacing(double lineSpacing){ this.lineSpacing = lineSpacing; }
 
-    private void instantiate(List<String> lore){
+    private void instantiate(List<String> lore, boolean letPlayersClick){
         this.lore = lore;
         //  LOAD STANDS
         for(int i = 0; i < lore.size(); i++){
             String str = lore.get(i);
             Location loc = getLocation().clone();
             loc.setY(loc.getY()-(lineSpacing*i));
-            HologramStand stand = new HologramStand(loc, str, isHidden(), letPlayersClick());
+            HologramStand stand = new HologramStand(loc, str, isHidden(), letPlayersClick);
             stand.setText(lore.get(i));
             addHolo(stand);
         }

@@ -83,15 +83,6 @@ public class Util {
     public static boolean hasBungee(){ return bungeeUtil != null; }
 
     //  SETTERS
-    public static void sendPacketsToAllPlayers(Packet<?>... packets){
-        Bukkit.getOnlinePlayers().forEach(player -> sendPacketsToPlayer(player, packets));
-    }
-    public static void sendPacketsToPlayer(Player player, Packet<?>... packets){
-        Arrays.stream(packets).forEach(packet -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
-    }
-    public static void sendPacketToPlayers(Packet<?> packet, Player... players){
-        Arrays.stream(players).forEach(player -> sendPacketsToPlayer(player, packet));
-    }
     public static void setBungeeUtil(BungeeUtil bUtil){ bungeeUtil = bUtil;}
     public static BungeeUtil addBungee(){
         if(bungeeUtil == null) return bungeeUtil = new BungeeUtil();
