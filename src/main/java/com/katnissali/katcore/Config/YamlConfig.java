@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-class YamlConfig extends YamlConfiguration {
+public class YamlConfig extends YamlConfiguration {
 
     private final File file;
     private final String name;
