@@ -25,11 +25,6 @@ public abstract class Cmd implements CommandExecutor, Registerable {
         this.tabCompleter = tabCompleter;
         if(register) register();
     }
-    public Cmd(String name, TabCompleter tabCompleter){
-        this.name = name;
-        this.tabCompleter = tabCompleter;
-        register();
-    }
 
     //  SETUP
     @Override
@@ -48,6 +43,7 @@ public abstract class Cmd implements CommandExecutor, Registerable {
 
     public void setTabCompleter(TabCompleter tabCompleter){
         this.tabCompleter = tabCompleter;
+        tabCompleter.register(name);
     }
     public TabCompleter getTabCompleter(){ return tabCompleter; }
 

@@ -11,12 +11,20 @@ import java.util.stream.Collectors;
 public abstract class TabCompleter implements Registerable, org.bukkit.command.TabCompleter {
 
     private String cmdName;
+    public TabCompleter(String cmdName){
+        this.cmdName = cmdName;
+        register();
+    }
+    public TabCompleter(){
+    }
 
     @Override
     public void register() {
-        Util.debug("cmdName: " + cmdName);
-        Util.debug("cmd: " + Util.getMain().getCommand(cmdName));
         Util.getMain().getCommand(cmdName).setTabCompleter(this);
+    }
+    public void register(String cmdName) {
+        this.cmdName = cmdName;
+        register();
     }
 
     @Override

@@ -67,7 +67,6 @@
     </repositories>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/net.md-5/bungeecord-api -->
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>

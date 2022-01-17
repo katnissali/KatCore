@@ -19,7 +19,7 @@ public class YamlConfig extends YamlConfiguration {
         reload();
     }
 
-    public String getColored(String path){
+    public String getColoredString(String path){
         return ChatColor.translateAlternateColorCodes('&', getString(path));
     }
     public void reload(){

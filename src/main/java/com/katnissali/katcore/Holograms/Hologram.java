@@ -14,11 +14,12 @@ public class Hologram extends HoloBase {
     private List<HologramStand> stands = new ArrayList<HologramStand>();
 
     public Hologram(String[] lore, Location location, boolean hidden, boolean letPlayersClick){
-        super(location, hidden);
+        super(null, letPlayersClick, hidden);
         instantiate(Arrays.asList(lore), letPlayersClick);
     }
     public Hologram(List<String> lore, Location location, boolean hidden, boolean letPlayersClick){
-        super(location, hidden);
+        super(null, letPlayersClick, hidden);
+        //  TODO fix
         instantiate(lore, letPlayersClick);
     }
 

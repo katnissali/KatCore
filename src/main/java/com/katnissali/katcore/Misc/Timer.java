@@ -16,12 +16,12 @@ public class Timer {
     }
 
     private void init(){
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Util.getMain(), new Runnable() {
+            Bukkit.getScheduler().scheduleAsyncRepeatingTask(Util.getMain(), new Runnable() {
             @Override
             public void run() {
                 updateTime();
             }
-        }, 20L, time);
+        }, 0L, 20L);
     }
 
     //  SETTERS
@@ -32,6 +32,7 @@ public class Timer {
         timeLeft = time;
     }
     public void onFinish(){}
+    public void setTimeLeft(int timeLeft){ this.timeLeft = timeLeft; }
 
     //  GETTERS
     public int getTime(){ return time; }

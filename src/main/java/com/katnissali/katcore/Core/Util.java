@@ -35,7 +35,6 @@ public class Util {
     //  CLASS GETTERS
     public static BungeeUtil getBungeeUtil(){ return bungeeUtil; }
     public static KatCore getMain(){ return main; }
-    public static FileConfiguration getConfig(){ return main.getConfig(); }
     public static ConfigManager getConfigManager(){ return configManager; }
 
     //  GETTERS
@@ -43,7 +42,7 @@ public class Util {
         return ChatColor.translateAlternateColorCodes('&', str);
     }
     public static String getColoredConfigString(String path){
-        return format(getConfig().getString(path));
+        return format(main.getConfig().getString(path));
     }
     public static Player getRandomPlayer(){
         for(Player player : Bukkit.getOnlinePlayers()){ return player; }
