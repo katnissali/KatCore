@@ -33,27 +33,23 @@ public class ItemBuilder extends ItemStack {
     public List<String> getLore(){ return getItemMeta().getLore(); }
 
     //  SETTERS
-    public ItemBuilder setName(String name) {
-        ItemMeta meta = getItemMeta();
-        meta.setDisplayName(name);
-        setItemMeta(meta);
-        return this;
-    }
     public ItemBuilder setLore(String... str){
-        setLore(Arrays.asList(str));
+        setLore(format(Arrays.asList(str)));
         return this;
     }
     public ItemBuilder setLore(List<String> lore){
         ItemMeta meta = getItemMeta();
-        meta.setLore(lore);
+        meta.setLore(format(lore));
         setItemMeta(meta);
         return this;
     }
     public ItemBuilder addLore(String str){
+        ItemMeta meta = getItemMeta();
         List<String> lore = getItemMeta().getLore();
         if(lore == null) lore = new ArrayList<>();
-        lore.add(str);
-        getItemMeta().setLore(lore);
+        lore.add(Util.format(str));
+        meta.setLore(lore);
+        setItemMeta(meta);
         return this;
     }
     public ItemBuilder setSkull(OfflinePlayer player){
@@ -67,16 +63,18 @@ public class ItemBuilder extends ItemStack {
 
         if(lore == null) return this;
         for(int i = 0; i < lore.size(); i++){
-            lore.set(i, Util.replace(lore.get(i), target, replacement));
+            lore.set(i, Util.replace(lore.get(i), target, Util.format(replacement)));
         }
+
         setLore(lore);
         String displayName = Util.replace(getDisplayName(), target, replacement);
-        setDisplayName(displayName);
+        setDisplayName(Util.format(displayName));
+
         return this;
     }
     public ItemBuilder setDisplayName(String name){
         ItemMeta meta = getItemMeta();
-        meta.setDisplayName(name);
+        meta.setDisplayName(Util.format(name));
         setItemMeta(meta);
         return this;
     }
@@ -106,4 +104,10 @@ public class ItemBuilder extends ItemStack {
         return new ItemBuilder(super.clone());
     }
 
+    private List<String> format(List<String> list){
+        for(int i = 0; i < list.size(); i++){
+            list.set(i, Util.format(list.get(i)));
+        }
+        return list;
+    }
 }
