@@ -27,7 +27,13 @@ public class Timer {
     //  SETTERS
     public void resume(){ paused = false; }
     public void pause(){ paused = true; }
-    public void updateTime(){ if(!paused) timeLeft--; }
+    public void updateTime(){
+        if(!paused) {
+            timeLeft--;
+            if (isFinished())
+                onFinish();
+        }
+    }
     public void reset(){
         timeLeft = time;
     }

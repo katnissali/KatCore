@@ -1,15 +1,16 @@
 package com.katnissali.katcore.Items;
 
-import com.katnissali.katcore.Items.ItemBuilder;
+import com.katnissali.katcore.Config.ConfigObject;
+import com.katnissali.katcore.Config.YamlConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class ArmorSet {
+public class ArmorSet implements ConfigObject {
 
-    private ItemBuilder helmet;
-    private ItemBuilder chestplate;
-    private ItemBuilder leggings;
-    private ItemBuilder boots;
+    private ItemBuilder helmet = null;
+    private ItemBuilder chestplate = null;
+    private ItemBuilder leggings = null;
+    private ItemBuilder boots = null;
 
     public ArmorSet(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots){
         this.helmet = new ItemBuilder(helmet);
@@ -17,12 +18,7 @@ public class ArmorSet {
         this.leggings = new ItemBuilder(leggings);
         this.boots = new ItemBuilder(boots);
     }
-    public ArmorSet(ItemBuilder helmet, ItemBuilder chesplate, ItemBuilder leggings, ItemBuilder boots){
-        this.helmet = helmet;
-        this.chestplate = chesplate;
-        this.leggings = leggings;
-        this.boots = boots;
-    }
+    public ArmorSet(){}
 
     //  GETTERS
     public ItemBuilder getHelmet(){ return helmet; }
@@ -36,13 +32,19 @@ public class ArmorSet {
     public void setLeggings(ItemBuilder leggings){ this.leggings = leggings; }
     public void setBoots(ItemBuilder boots){ this.boots = boots; }
     public void applyArmor(Player player){
-        player.getInventory().setHelmet(helmet);
-        player.getInventory().setChestplate(chestplate);
-        player.getInventory().setHelmet(leggings);
-        player.getInventory().setBoots(boots);
+        if(helmet != null)  player.getInventory().setHelmet(helmet);
+        if(chestplate != null)  player.getInventory().setHelmet(chestplate);
+        if(leggings != null)  player.getInventory().setHelmet(leggings);
+        if(boots != null)  player.getInventory().setHelmet(boots);
+
         player.updateInventory();
     }
 
-
-
+    @Override
+    public void saveToConfig(YamlConfig config, String path) {
+        config.set(path + ".helmet", getHelmet());
+        config.set(path + ".chestplate", getChestplate());
+        config.set(path + ".leggings", getLeggings());
+        config.set(path + ".boots", getBoots());
+    }
 }

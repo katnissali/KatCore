@@ -1,5 +1,7 @@
 package com.katnissali.katcore.Items;
 
+import com.katnissali.katcore.Config.ConfigObject;
+import com.katnissali.katcore.Config.YamlConfig;
 import com.katnissali.katcore.Core.Util;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemBuilder extends ItemStack {
+public class ItemBuilder extends ItemStack implements ConfigObject {
 
     public ItemBuilder(Material type){
         super(type, 1);
@@ -34,20 +36,28 @@ public class ItemBuilder extends ItemStack {
 
     //  SETTERS
     public ItemBuilder setLore(String... str){
-        setLore(format(Arrays.asList(str)));
+        setLore(Util.format(Arrays.asList(str)));
         return this;
     }
     public ItemBuilder setLore(List<String> lore){
         ItemMeta meta = getItemMeta();
-        meta.setLore(format(lore));
+        meta.setLore(Util.format(lore));
         setItemMeta(meta);
         return this;
     }
-    public ItemBuilder addLore(String str){
+    public ItemBuilder addLore(String... strs){
         ItemMeta meta = getItemMeta();
-        List<String> lore = getItemMeta().getLore();
-        if(lore == null) lore = new ArrayList<>();
-        lore.add(Util.format(str));
+        List<String> lore;
+
+        if(getLore() == null){
+            lore = new ArrayList<>();
+        } else {
+            lore = getLore();
+        }
+
+        Arrays.stream(strs).forEach(str -> lore.add(Util.format(str)));
+
+        assert meta != null;
         meta.setLore(lore);
         setItemMeta(meta);
         return this;
@@ -55,7 +65,9 @@ public class ItemBuilder extends ItemStack {
     public ItemBuilder setSkull(OfflinePlayer player){
         setType(Material.PLAYER_HEAD);
         SkullMeta meta = (SkullMeta) getItemMeta();
+        assert meta != null;
         meta.setOwningPlayer(player);
+        setItemMeta(meta);
         return this;
     }
     public ItemBuilder replaceInLore(String target, String replacement){
@@ -84,7 +96,7 @@ public class ItemBuilder extends ItemStack {
         setItemMeta(meta);
         return this;
     }
-    public ItemBuilder addItemFlags(ItemFlag... flags){
+    public ItemBuilder addItemFlag(ItemFlag... flags){
         ItemMeta meta = getItemMeta();
         meta.addItemFlags(flags);
         setItemMeta(meta);
@@ -92,22 +104,20 @@ public class ItemBuilder extends ItemStack {
     }
 
     //  MISC
-    public ItemStack getItem(){ return super.clone(); }
+    public ItemStack getItem(){ return new ItemStack(super.clone()); }
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof ItemStack)) return false;
+        if(!(obj instanceof ItemStack)) return super.equals(obj);
         ItemStack item = (ItemStack) obj;
-        return (item.getType() == getType()) && (item.getItemMeta().getLore().equals(getLore())) && (item.getItemMeta().getDisplayName().equals(getDisplayName()));
+        return super.equals(obj) || ((item.getType() == getType()) && (item.getItemMeta().getLore().equals(getLore())) && (item.getItemMeta().getDisplayName().equals(getDisplayName())));
     }
     @Override
     public ItemBuilder clone(){
         return new ItemBuilder(super.clone());
     }
 
-    private List<String> format(List<String> list){
-        for(int i = 0; i < list.size(); i++){
-            list.set(i, Util.format(list.get(i)));
-        }
-        return list;
+    @Override
+    public void saveToConfig(YamlConfig config, String path) {
+        config.set(path, new ItemStack(this));
     }
 }

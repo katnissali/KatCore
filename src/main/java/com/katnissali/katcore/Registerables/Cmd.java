@@ -2,6 +2,7 @@ package com.katnissali.katcore.Registerables;
 
 import com.katnissali.katcore.Core.Util;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -28,7 +29,7 @@ public abstract class Cmd implements CommandExecutor, Registerable {
 
     //  SETUP
     @Override
-    public abstract boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args);
+    public abstract boolean onCommand(CommandSender sender, Command cmd, String label, String[] args);
     @Override
     public void register() {
         PluginCommand cmd = Util.getMain().getCommand(name);

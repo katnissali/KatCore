@@ -27,6 +27,13 @@ public class ConfigManager {
         return config;
     }
 
+    public void reloadAll(){
+        Util.log("Reloading configs.");
+        for(YamlConfig config : configs.values()){
+            config.reload();
+        }
+        Util.log("Configs reloaded.");
+    }
     public void saveConfigs(){
         Util.log("Saving configs...");
         for(YamlConfig config : configs.values()){
@@ -38,6 +45,6 @@ public class ConfigManager {
     public YamlConfig getConfig(String name){
         return configs.get(name + (name.endsWith(".yml")?"":".yml"));
     }
-    public HashMap<String, YamlConfig> getConfigs(){ return configs; }
+    public HashMap<String, YamlConfig> getConfigs(){ return (HashMap<String, YamlConfig>) configs.clone(); }
 
 }

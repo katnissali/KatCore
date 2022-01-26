@@ -1,8 +1,11 @@
 package com.katnissali.katcore.Config;
 
 import com.katnissali.katcore.Core.Util;
+import com.katnissali.katcore.Items.ArmorSet;
+import com.katnissali.katcore.Items.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
@@ -54,4 +57,18 @@ public class YamlConfig extends YamlConfiguration {
     }
     public String getFileName(){ return name; }
 
+    public ArmorSet getArmorSet(String parentPath){
+        ItemStack helmet = getItemStack(parentPath + ".helmet");
+        ItemStack chestplate = getItemStack(parentPath + ".chestplate");
+        ItemStack leggings = getItemStack(parentPath + ".leggings");
+        ItemStack boots = getItemStack(parentPath + ".boots");
+        return new ArmorSet(helmet, chestplate, leggings, boots);
+    }
+
+    @Override
+    public void set(String path, Object value) {
+        if(value instanceof ConfigObject) ((ConfigObject)value).saveToConfig(this, path);
+        else super.set(path, value);
+        save();
+    }
 }

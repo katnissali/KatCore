@@ -12,19 +12,20 @@ import java.util.ArrayList;
 
 public class BungeeUtil {
 
-    private static boolean bungeeCordRegistered = false;
     private static ArrayList<String> registeredOutChannels = new ArrayList<>();
 
     public BungeeUtil(){
-        if(!bungeeCordRegistered) {
+        if(isRegistered("BungeeCord")) {
             registerOutgoingChannel("BungeeCord");
-            bungeeCordRegistered = true;
+        } else {
+            Util.printError("Attempted to register bungeecord but it is already registered!");
         }
+
         if(!Util.getMain().getServer().getOnlineMode()) Util.printError("Trying to load BungeeUtil but server is on online mode. This may cause fatal issues!");
         if(Util.getBungeeUtil() == null) Util.setBungeeUtil(this);
     }
 
-    public ArrayList<String> getRegisteredOutChannels(){ return registeredOutChannels; }
+    public static ArrayList<String> getRegisteredOutChannels(){ return (ArrayList<String>) registeredOutChannels.clone(); }
     public static boolean isRegistered(String channel){ return registeredOutChannels.contains(channel); }
 
     public static void registerOutgoingChannel(String channel){

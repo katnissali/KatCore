@@ -3,21 +3,18 @@ package com.katnissali.katcore.Core;
 import com.katnissali.katcore.Bungee.BungeeUtil;
 import com.katnissali.katcore.Config.ConfigManager;
 import com.katnissali.katcore.KatCore;
-import net.minecraft.server.v1_16_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -27,9 +24,9 @@ public class Util {
     protected static ConfigManager configManager;
     private static BungeeUtil bungeeUtil;
 
-    public static void setup(KatCore m){
-        main = m;
-        configManager = new ConfigManager();
+    public Util(KatCore m){
+        if(main == null) main = m;
+        if(configManager == null) configManager = new ConfigManager();
     }
 
     //  CLASS GETTERS
@@ -48,7 +45,9 @@ public class Util {
         for(Player player : Bukkit.getOnlinePlayers()){ return player; }
         return null;
     }
-    public static String getPrefix(){ return getColoredConfigString("messages.prefix"); }
+    public static String getPrefix(){
+        return Util.format(main.getConfig().getString("messages.prefix"));
+    }
     public static Object[] listToArray(List<Object> items){
         Object[] obj = new Object[items.size()];
         for(int i = 0; i < items.size(); i++){ obj[i] = items.get(i); }
@@ -80,12 +79,48 @@ public class Util {
         return list.get(new Random().nextInt(list.size()-1));
     }
     public static boolean hasBungee(){ return bungeeUtil != null; }
+    public static List<String> format(List<String> list){
+        if(list == null) return null;
+        for(int i = 0; i < list.size(); i++){
+            list.set(i, Util.format(list.get(i)));
+        }
+        return list;
+    }
 
     //  SETTERS
     public static void setBungeeUtil(BungeeUtil bUtil){ bungeeUtil = bUtil;}
     public static BungeeUtil addBungee(){
         if(bungeeUtil == null) return bungeeUtil = new BungeeUtil();
         else return bungeeUtil;
+    }
+    @Nullable
+    public static File saveResourceToDataFolder(String name){
+        log("Saving resource " + name + " to data folder!");
+        log("test2");
+        File file = new File(main.getDataFolder(), name);
+        log("file: " + file);
+        try {
+            if (!file.exists()) {
+                log(name + " does not exist, attempting to load a new file.");
+                if (main.getResource(name) != null) {
+                    log("Found " + name + " resource file");
+                    main.saveResource(name, false);
+                    log("Saved " + name + " resource file.");
+                    return file;
+                } else {
+                    printError(name + " file not found in plugin resource folder, please add the file manually.");
+                    return null;
+                }
+            } else {
+                log("File already exists!");
+                return file;
+            }
+        } catch (Exception e) {
+            printError("Unable to save default file: " + name);
+            e.printStackTrace();
+        }
+        Util.debug("finished");
+        return null;
     }
     public static void sendCommand(String str){ Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), str); }
     public static void noPermission(Player player){ player.sendMessage(ChatColor.RED + "You do not have permission to do this."); }

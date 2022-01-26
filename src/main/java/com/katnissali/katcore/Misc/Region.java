@@ -1,14 +1,15 @@
 package com.katnissali.katcore.Misc;
 
 import com.katnissali.katcore.Core.Util;
+import net.minecraft.server.v1_16_R3.DoubleBlockFinder;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
 
 public class Region {
 
-    private Location loc1;
-    private Location loc2;
+    private final Location loc1;
+    private final Location loc2;
 
     public Region(Location loc1, Location loc2){
         this.loc1 = loc1.getBlock().getLocation();
@@ -46,7 +47,6 @@ public class Region {
                 && loc.getY() >= getMinY() && loc.getY() <= getMaxY()
                 && loc.getZ() >= getMinZ() && loc.getZ() <= getMaxZ();
     }
-
     public int getMinY(){
         return (int) Math.min(loc1.getY(), loc2.getY());
     }

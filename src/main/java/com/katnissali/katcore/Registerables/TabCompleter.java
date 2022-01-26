@@ -31,7 +31,9 @@ public abstract class TabCompleter implements Registerable, org.bukkit.command.T
     public abstract List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args);
 
     public static List<String> format(List<String> list, String[] args){
-        return list.stream().filter(a -> a.toLowerCase().startsWith(args[args.length-1].toLowerCase())).collect(Collectors.toList());
+        return list.stream().filter(arg ->
+                arg.toLowerCase().startsWith(args[args.length-1].toLowerCase()))
+                .collect(Collectors.toList());
     }
 
 }

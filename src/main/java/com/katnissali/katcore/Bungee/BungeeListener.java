@@ -22,6 +22,7 @@ public class BungeeListener implements PluginMessageListener, Registerable {
     public BungeeListener(String channel){
         this.channel = channel;
     }
+
     public BungeeListener(boolean register){
         channel = "BungeeCord";
         if(register) register();
@@ -33,7 +34,7 @@ public class BungeeListener implements PluginMessageListener, Registerable {
 
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] info) {
-        if(channel.equals(this.channel))
+        if(channel == null || channel.equals(this.channel))
         receiveMessage(getSubChannel(info), player, getMessage(info), info);
     }
     private String getSubChannel(byte[] info){
